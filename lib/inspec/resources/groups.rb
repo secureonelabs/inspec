@@ -111,7 +111,7 @@ module Inspec::Resources
     end
 
     def members
-      flatten_entry(group_info, "members") || []
+      flatten_entry(group_info, "members") || empty_value_for_members
     end
 
     def local
@@ -140,6 +140,10 @@ module Inspec::Resources
       # we need a local copy for the block
       group = @group.dup
       @groups_cache ||= inspec.groups.where { name == group }
+    end
+
+    def empty_value_for_members
+      inspec.os.windows? ? [] : ""
     end
   end
 
